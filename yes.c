@@ -4,19 +4,32 @@
 
 int main(int argc, char *argv[]) {
   if (argc == 1) {
-    for (;;)
+    while (1) {
       printf("yes\n");
+    }
   } else {
+
     long len, i, j;
-    char *ss, *out;
+    char *out;
 
     for (len = i = 0; argv[++i];)
       len += strlen(argv[i]) + 1;
-    out = ss = (char *)malloc(len);
 
-    for (i = 1; argv[i]; i++)
-      ss += sprintf(ss, " %s" + !(i - 1), argv[i]);
-    for (;;)
+    out = (char *)malloc(len);
+
+    if (out == NULL) {
+      fprintf(stderr, "Memory allocation failed!\n");
+      return 1;
+    }
+
+    for (i = 1; argv[i]; i++) {
+      if (i > 1)
+        strcat(out, " ");
+      strcat(out, argv[i]);
+    }
+
+    while (1) {
       printf("%s\n", out);
+    }
   }
 }
